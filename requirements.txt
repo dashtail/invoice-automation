@@ -1,0 +1,8 @@
+fastapi
+starkbank
+uvicorn[standard]
+python-dotenv
+google-cloud-secret-manager
+pytest
+apscheduler
+httpx

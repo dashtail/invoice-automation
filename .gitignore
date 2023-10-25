@@ -1,0 +1,38 @@
+# Python related
+__pycache__
+*.py[cod]
+*.pyo
+*.pyd
+*.pickle
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+*.eggs/
+*.ipynb
+
+# Virtualenv
+*.venv/
+venv/
+
+# IDE related
+.vscode/
+
+# OS related
+.DS_Store  # MacOS
+Thumbs.db  # Windows
+
+# Diagraming
+*.drawio
+
+#.env file
+.env
+
+*.sqlite3
+data/
+.DS_Store
+
+Pipfile
+
+.pytest_cache
