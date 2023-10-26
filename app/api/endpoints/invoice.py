@@ -11,19 +11,27 @@ router = APIRouter()
 
 @router.post("/webhook")
 async def webhook(payload: WebhookPayload, request: Request):
+    data = await request.body()
+    data = data.decode("utf-8")
+    
     try:
-        data = await request.json()
         starkbank.event.parse(
             content=data,
             signature=request.headers.get("Digital-Signature"),
         )
-    except:
-        raise HTTPException(status_code=400, detail="Invalid signature")
+    except Exception as e:
+        print(f"log --->: {e}")
+        print(f"log --->: {data}")
+        print(f'log --->: {request.headers.get("Digital-Signature")}')
 
+        raise HTTPException(status_code=400, detail="Invalid signature")
+    
     event = payload.event
 
     if event.subscription == "invoice":
         if event.log.type == "credited":
+            
+
             balance = get_balance()
             amount = calculate_total_payment(event.log.invoice)
             if balance.amount > amount:
