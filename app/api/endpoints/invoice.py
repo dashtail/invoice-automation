@@ -1,15 +1,15 @@
 from fastapi import APIRouter, HTTPException
 from app.core.starkbank.transfer import send_transfer
-from app.schemas.webhook import WebhookEvent
+from app.schemas.webhook import WebhookPayload
 from app.core.starkbank.transfer import calculate_total_payment
 from app.core.starkbank.balance import get_balance
-from app.tasks.invoice import create_invoices
 
 router = APIRouter()
 
 
 @router.post("/webhook")
-def webhook(event: WebhookEvent):
+def webhook(payload: WebhookPayload):
+    event = payload.event
     if event.subscription == "invoice":
         if event.log.type == "credited":
             balance = get_balance()
@@ -25,13 +25,5 @@ def webhook(event: WebhookEvent):
                     raise HTTPException(status_code=500, detail=e)
             else:
                 raise HTTPException(status_code=400, detail="No balance available")
-                
+
     return {"message": "No transfer needed"}
-
-
-@router.post("/test_webhook")
-def create(item: dict):
-    print(item)
-    return item
-
-

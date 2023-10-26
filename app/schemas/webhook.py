@@ -38,3 +38,7 @@ class WebhookEvent(BaseModel):
     subscription: str
     log: LogSchema
 
+
+class WebhookPayload(BaseModel):
+    event: WebhookEvent
+
