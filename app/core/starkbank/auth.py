@@ -11,4 +11,3 @@ def get_user() -> Project:
 
 
     return user
-# 
