@@ -3,6 +3,7 @@ from app.core.starkbank.transfer import send_transfer
 from app.schemas.webhook import WebhookEvent
 from app.core.starkbank.transfer import calculate_total_payment
 from app.core.starkbank.balance import get_balance
+from app.tasks.invoice import create_invoices
 
 router = APIRouter()
 
@@ -26,3 +27,11 @@ def webhook(event: WebhookEvent):
                 raise HTTPException(status_code=400, detail="No balance available")
                 
     return {"message": "No transfer needed"}
+
+
+@router.post("/test_webhook")
+def create(item: dict):
+    print(item)
+    return item
+
+
