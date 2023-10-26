@@ -10,15 +10,22 @@ def create_invoices():
     number_of_invoices = random.randint(8, 12)
     user = get_user()
 
-    for _ in range(number_of_invoices):
-        invoice = Invoice(
-            amount=random.randint(500, 25000),
-            name=fake.name(),
-            tax_id=fake.cpf(),
-        ).create_invoice_object()
+    try:
+        for _ in range(number_of_invoices):
+            invoice = Invoice(
+                amount=random.randint(5000, 250000),
+                name=fake.name(),
+                tax_id=fake.cpf(),
+            ).create_invoice_object()
 
-        invoices.append(invoice)
+            invoices.append(invoice)
+            
+        invoices = starkbank.invoice.create(invoices, user=user)
         
-    invoices = starkbank.invoice.create(invoices, user=user)
+        print("Invoices created successfully")
+
+    except Exception as e:
+        print(e)
+        return None
 
     return invoices
