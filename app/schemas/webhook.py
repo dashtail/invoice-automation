@@ -4,11 +4,11 @@ from pydantic import BaseModel
 class InvoiceDetailSchema(BaseModel):
     id: str
     amount: int
-    fine_amount: int
-    interest_amount: int
-    discount_amount: int
+    fine_amount: int = None
+    interest_amount: int = None
+    discount_amount: int = None
     due: str
-    tax_id: str
+    tax_id: str = None
     name: str
     expiration: float
     fine: float
@@ -22,7 +22,7 @@ class InvoiceDetailSchema(BaseModel):
     brcode: str
     status: str
     fee: int
-    transaction_ids: list
+    transaction_ids: list = None
     created: str
     updated: str
 
