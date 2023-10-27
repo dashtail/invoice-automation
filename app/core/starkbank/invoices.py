@@ -17,9 +17,6 @@ class Invoice:
             amount=self.amount,
             name=self.name,
             tax_id=self.tax_id,
-            due=(datetime.now() + timedelta(days=30)),
-            discounts=[{'percentage': 10, 'due': (datetime.now() + timedelta(days=4))}],
-
         )
 
         return invoice

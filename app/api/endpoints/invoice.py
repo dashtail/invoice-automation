@@ -11,10 +11,10 @@ router = APIRouter()
 
 @router.post("/webhook")
 async def webhook(payload: WebhookPayload, request: Request):
-    data = await request.body()
-    data = data.decode("utf-8")
-    user = get_user()
     try:
+        data = await request.body()
+        data = data.decode("utf-8")
+        user = get_user()
         starkbank.event.parse(
             content=data,
             signature=request.headers.get("Digital-Signature"),
@@ -22,9 +22,6 @@ async def webhook(payload: WebhookPayload, request: Request):
         )
     except Exception as e:
         print(f"log --->: {e}")
-        print(f"log --->: {data}")
-        print(f'log --->: {request.headers.get("Digital-Signature")}')
-
         raise HTTPException(status_code=400, detail="Invalid signature")
     
     event = payload.event
@@ -48,5 +45,3 @@ async def webhook(payload: WebhookPayload, request: Request):
                 raise HTTPException(status_code=400, detail="No balance available")
 
     return {"message": "No transfer needed"}
-
-
