@@ -28,8 +28,6 @@ async def webhook(payload: WebhookPayload, request: Request):
 
     if event.subscription == "invoice":
         if event.log.type == "credited":
-            
-
             balance = get_balance()
             amount = calculate_total_payment(event.log.invoice)
             if balance.amount > amount:
@@ -40,7 +38,7 @@ async def webhook(payload: WebhookPayload, request: Request):
                     )
                     return {"message": "Transfer successful"}
                 except Exception as e:
-                    raise HTTPException(status_code=500, detail=e)
+                    raise HTTPException(status_code=500, detail={"message": str(e)})
             else:
                 raise HTTPException(status_code=400, detail="No balance available")
 
